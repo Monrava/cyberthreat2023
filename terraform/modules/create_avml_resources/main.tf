@@ -43,7 +43,7 @@ resource "google_project_iam_member" "roles_to_grant_to_service_account_tf_avml"
 # Create AVML bucket
 resource "google_storage_bucket" "demo-avml-bucket" {
   name          = "demo-avml-bucket"
-  location      = "US"
+  location      = "EU"
   force_destroy = true
 
   uniform_bucket_level_access = true

@@ -33,5 +33,5 @@ variable "compute_engine_type" {
 variable "team_name" {
    type        = string
    description = "Name of the team owning the cluster"
-   default     = "demonyc2023"
+   default     = "demo"
 }

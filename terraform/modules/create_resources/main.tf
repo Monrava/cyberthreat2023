@@ -19,7 +19,7 @@ output "pod_name_avml" {
 }
 
 output "pod_namespace_avml" {
-  value = kubernetes_namespace.namespace_demonyc2023_mem_dump.metadata[0].name
+  value = kubernetes_namespace.namespace_demo_mem_dump.metadata[0].name
 }
 
 output "pod_name_att" {

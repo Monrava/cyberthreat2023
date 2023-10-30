@@ -1,14 +1,14 @@
 ################################################################################
-resource "kubernetes_namespace" "namespace_demonyc2023" {
+resource "kubernetes_namespace" "namespace_demo" {
   metadata {
     annotations = {
-      name = "namespace-demonyc2023"
+      name = "namespace-demo"
     }
 
     labels = {
-      team = "demonyc2023"
+      team = "demo"
     }
-    name = "namespace-demonyc2023"
+    name = "namespace-demo"
   }
   timeouts {
     delete = "10m"
@@ -22,7 +22,7 @@ resource "kubernetes_namespace" "namespace_test" {
     }
 
     labels = {
-      team = "demonyc2023"
+      team = "demo"
     }
     name = "namespace-test"
   }
@@ -31,16 +31,16 @@ resource "kubernetes_namespace" "namespace_test" {
   }
 }
 ###############################################################################
-resource "kubernetes_namespace" "namespace_demonyc2023_mem_dump" {
+resource "kubernetes_namespace" "namespace_demo_mem_dump" {
   metadata {
     annotations = {
-      name = "namespace-demonyc2023-mem-dump"
+      name = "namespace-demo-mem-dump"
     }
 
     labels = {
-      team = "demonyc2023"
+      team = "demo"
     }
-    name = "namespace-demonyc2023-mem-dump"
+    name = "namespace-demo-mem-dump"
   }
   timeouts {
     delete = "30m"
@@ -50,7 +50,7 @@ resource "kubernetes_namespace" "namespace_demonyc2023_mem_dump" {
 resource "kubernetes_pod" "pod_node_affinity_demo_hello_app" {
   metadata {
     name = "pod-node-affinity-demo-hello-app-new"
-    namespace = kubernetes_namespace.namespace_demonyc2023.metadata[0].name
+    namespace = kubernetes_namespace.namespace_demo.metadata[0].name
   }
   spec {
     affinity {
@@ -62,7 +62,7 @@ resource "kubernetes_pod" "pod_node_affinity_demo_hello_app" {
               key      = "team"
               operator = "In"
               # Values are the labels that a node has
-              values   = ["demonyc2023"]
+              values   = ["demo"]
             }
           }
         }
@@ -90,7 +90,7 @@ resource "kubernetes_pod" "pod_node_affinity_nginx" {
               key      = "team"
               operator = "In"
               # Values are the labels that a node has
-              values   = ["demonyc2023"]
+              values   = ["demo"]
             }
           }
         }
@@ -106,7 +106,7 @@ resource "kubernetes_pod" "pod_node_affinity_nginx" {
 resource "kubernetes_pod" "pod_node_affinity_memory_dump" {
 metadata {
   name = "pod-node-affinity-mem-dump"
-  namespace = kubernetes_namespace.namespace_demonyc2023_mem_dump.metadata[0].name
+  namespace = kubernetes_namespace.namespace_demo_mem_dump.metadata[0].name
 }
 spec {
   affinity {
@@ -118,7 +118,7 @@ spec {
             key      = "team"
             operator = "In"
             # Values are the labels that a node has
-            values   = ["demonyc2023"]
+            values   = ["demo"]
           }
         }
       }
@@ -140,7 +140,7 @@ spec {
 resource "kubernetes_pod" "pod_node_affinity_attacker_pod" {
   metadata {
     name = "pod-node-affinity-demo-attacker-pod"
-    #namespace = "namespace-demonyc2023"
+    #namespace = "namespace-demo"
   }
   spec {
     affinity {
@@ -154,7 +154,7 @@ resource "kubernetes_pod" "pod_node_affinity_attacker_pod" {
               key      = "team"
               operator = "In"
               # Values are the labels that a node has
-              values   = ["demonyc2023"]
+              values   = ["demo"]
             }
           }
         }
