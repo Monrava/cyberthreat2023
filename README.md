@@ -42,32 +42,36 @@ Install gcloud using this link: https://cloud.google.com/sdk/docs/install
 
 ### Authenticate to GCP
 ```bash
-$ gcloud auth application-default login
+gcloud auth application-default login
 ```
 
 ### Enable GCP project services
 https://cloud.google.com/migrate/containers/docs/config-dev-env
 ```bash
-$ gcloud services enable servicemanagement.googleapis.com servicecontrol.googleapis.com cloudresourcemanager.googleapis.com compute.googleapis.com container.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com
+gcloud services enable servicemanagement.googleapis.com servicecontrol.googleapis.com cloudresourcemanager.googleapis.com compute.googleapis.com container.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com
 ```
 
 ### Activate GCP ssh key permissions: 
 ```bash
-$ ssh-add ~/.ssh/google_compute_engine
+ssh-add ~/.ssh/google_compute_engine
 ```
 ### Create GCR images
 ```bash
-$ export gcp_project=YOUR_GCP_PROJECT_NAME
-$ export zone=ZONE
-
-$ docker build -t gcr.io/$gcp_project/avml_image:latest -f image_files/avml/Dockerfile .
-
-$ docker build -t gcr.io/$gcp_project/attacker_image:latest  -f image_files/attacker/Dockerfile .
+export gcp_project=YOUR_GCP_PROJECT_NAME
+```
+```bash
+export zone=ZONE
+```
+```bash
+docker build -t gcr.io/$gcp_project/avml_image:latest -f image_files/avml/Dockerfile .
+```
+```bash
+docker build -t gcr.io/$gcp_project/attacker_image:latest  -f image_files/attacker/Dockerfile .
 ```
 ### Push GCR images
 ```bash
-$ docker push  gcr.io/$gcp_project/avml_image:latest  
-$ docker push  gcr.io/$gcp_project/attacker_image:latest 
+docker push  gcr.io/$gcp_project/avml_image:latest  
+docker push  gcr.io/$gcp_project/attacker_image:latest 
 ```
 ## Terraform
 This sections explains how to setup your Terraform environment to create the needed resources.
@@ -75,7 +79,7 @@ This sections explains how to setup your Terraform environment to create the nee
   https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/getting_started
 ### Instantiate: 
 ```bash
-$ terraform init
+terraform init
 ```
 
 ### Update environment:
@@ -89,45 +93,45 @@ var.installation_path
 
 ### Create Terraform GKE cluster, resources and instance
 ```bash
-$ cd ./cyberthreatnyc2023/terraform_cyberthreat
-$ terraform apply -lock=true -auto-approve
-$ terraform output  >> terraform_resources.conf
+cd ./cyberthreatnyc2023/terraform_cyberthreat
+terraform apply -lock=true -auto-approve
+terraform output  >> terraform_resources.conf
 ```
 
 ## Access resources
 ```bash
-$ gcloud container clusters get-credentials demo-gke-cluster --zone $zone --project $gcp_project
-$ kubectl exec --stdin --tty pod-node-affinity-demo-attacker-pod --namespace default -- /bin/bash  
+gcloud container clusters get-credentials demo-gke-cluster --zone $zone --project $gcp_project
+kubectl exec --stdin --tty pod-node-affinity-demo-attacker-pod --namespace default -- /bin/bash  
 ```
 Run:
 ```bash
-$ ./actions.sh 
+./actions.sh 
 ```
 And other commands you want and then exit the shell.
 When you log back in, you should see the bash history updated by typing:
 ```bash
-$ history
+history
 ```
 
 ## Start demo
 
 ### Create virtual environment and install dependencies
 ```bash
-$ python3 -m venv .venv
-$ source .venv/bin/activate
-(.venv)$ pip3 install -r requirements.txt
+python3 -m venv .venv
+source .venv/bin/activate
+(.venv)pip3 install -r requirements.txt
 ```
 ### Run script
 Execute the python script using the GKE node name. 
 E.g.
 ```bash
-$ python3 memory_collection.py --gke_node_name gke-demo-gke-clust-demo-gke-node--f72013e9-jm9c
+python3 memory_collection.py --gke_node_name gke-demo-gke-clust-demo-gke-node--f72013e9-jm9c
 ```
 
 ### Access forensic compute engine
 Once the script finishes, access the AVML instance here.
 ```bash
-$ gcloud compute ssh "avml-instance" --tunnel-through-iap
+gcloud compute ssh "avml-instance" --tunnel-through-iap
 ```
 
 ## LICENSE

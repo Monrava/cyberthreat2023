@@ -160,7 +160,7 @@ def define_kubectl_commands(
         + gke_node
         + " --zone="
         + zone
-        + " | grep image | grep sourceImage | awk -F / '{ print $(NF-0) }' | sed -e 's/.*cos-[^-]*-\(.*\)-v.*/\\1/'| tr - .)"
+        + " | grep image | grep sourceImage | awk -F / '{ print $(NF-0) }' | sed -e 's/.*cos-[^-]*-\(.*\)-.*[a-z]-.*[a-z]/\\1/'| tr - .)"
     )
     instace_commands = [
         "pwd",
