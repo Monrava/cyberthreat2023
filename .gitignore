@@ -35,3 +35,9 @@ terraform.rc
 
 # Terraform config files
 terraform_resources.conf
+
+# Ignore local python-version uploads
+*.python-version
+
+# Ignore tox
+*.tox
