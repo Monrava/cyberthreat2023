@@ -41,3 +41,14 @@ terraform_resources.conf
 
 # Ignore tox
 *.tox
+
+# Ignore pytest
+*.pytest_cache
+/test-reports
+
+# Ignore memory_collection.egg-info
+/src/*.egg-info/
+
+# Ignore
+*.xml
+
