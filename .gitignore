@@ -35,3 +35,23 @@ terraform.rc
 
 # Terraform config files
 terraform_resources.conf
+
+# Ignore local python-version uploads
+*.python-version
+
+# Ignore tox
+*.tox
+
+# Ignore pytest
+*.pytest_cache
+
+# Ignore test reports
+/test-reports
+
+# Ignore memory_collection.egg-info
+/src/*.egg-info/
+
+# Ignore
+*.xml
+*.cfg
+*.coverage

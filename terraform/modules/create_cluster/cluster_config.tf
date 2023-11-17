@@ -6,6 +6,7 @@ resource "google_container_cluster" "demo-gke-cluster" {
   remove_default_node_pool    = true
   enable_intranode_visibility = false
   initial_node_count          = 1
+  deletion_protection         = false
 
   #Configure node.
   node_config {
@@ -38,7 +39,6 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     preemptible     = true
     machine_type    = var.compute_engine_type
     tags            = [google_compute_firewall.demo-access-rule.name]
-    
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     service_account = google_service_account.demo-gke-sa.email

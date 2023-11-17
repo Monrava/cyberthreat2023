@@ -17,23 +17,24 @@ BEFORE RUNNING:
    `pip install --upgrade google-api-python-client`
     pip install --upgrade google-cloud-storage
 """
+import argparse
+import base64
+import datetime
 import json
 import time
-import datetime
-import google.auth
-import kubernetes
-import base64
-import argparse
+from datetime import datetime, timedelta
+from tempfile import NamedTemporaryFile
+
 import google.auth
 import google.auth.transport.requests
-from tempfile import NamedTemporaryFile
-from google.cloud import storage
-from google.cloud import container
-from google.auth.transport import requests
-from datetime import datetime, timedelta
+import kubernetes
 from google.auth.exceptions import TransportError
+from google.auth.transport import requests
+from google.cloud import container, storage
 from kubernetes.client.exceptions import ApiException, ApiValueError
 from kubernetes.stream import stream
+
+
 ########################################################################################################################
 def get_credentials(project_id: str):
     # Start authentication - with subprocess modification to allow for re-enabling the project creds.
@@ -53,6 +54,8 @@ def get_credentials(project_id: str):
     credentials, project_id = google.auth.default()
     credentials.refresh(requests.Request())
     return credentials
+
+
 ########################################################################################################################
 def generate_signed_url(
     target_project: str,
@@ -72,10 +75,9 @@ def generate_signed_url(
     try:
         url = blob.generate_signed_url(
             service_account_email=sa_acc_to_imp,
-            access_token=cred.token,  
+            access_token=cred.token,
             version="v4",
-            expiration=datetime.now()
-            + timedelta(hours=6), 
+            expiration=datetime.now() + timedelta(hours=6),
             method="PUT",
             content_type=content_type,
         )
@@ -149,9 +151,7 @@ def define_kubectl_commands(
         [
             "/bin/bash",
             "-c",
-            "python3 "
-            + attacker_script_file
-            + " > /dev/null 2> /dev/null &", 
+            "python3 " + attacker_script_file + " > /dev/null 2> /dev/null &",
         ]
     ]
     # Add download commands from bucket
@@ -176,10 +176,12 @@ def define_kubectl_commands(
         + "/vmlinux",
         "./dwarf2json/dwarf2json linux --elf vmlinux > volatility3/volatility3/symbols/dwarf2json_profile.json",
         "./" + volatility_script + " " + output_folder + " " + " 2> /dev/null",
-        #"rm *.lime *.lime.compressed",
-        #"rm vmlinux",
+        # "rm *.lime *.lime.compressed",
+        # "rm vmlinux",
     ]
     return instace_commands, avml_commands, attacker_commands
+
+
 #########################################################################################################################
 def memdump_container_run_cmd(exec_command_array, pod_name, pod_namespace, v1):
     # Docs: https://askubuntu.com/questions/141928/what-is-the-difference-between-bin-sh-and-bin-bash
@@ -206,6 +208,8 @@ def memdump_container_run_cmd(exec_command_array, pod_name, pod_namespace, v1):
             print(f"error for: {exec_command}" + "\n" + "was: " + str(e))
             response[str(exec_command)]["status"] = "Failed"
     return response
+
+
 ########################################################################################################################
 def avml_instance_actions(
     cred, instance_name, project_id, zone, blob_object_name, instace_commands
@@ -237,6 +241,8 @@ def avml_instance_actions(
             response[str(instance_command)]["status"] = "Failed"
 
     return response
+
+
 ########################################################################################################################
 def get_gcp_environment(terraform_file_name: str):
     import os
@@ -257,9 +263,10 @@ def get_gcp_environment(terraform_file_name: str):
     except FileNotFoundError as e:
         print(f"error was: {e}")
     return response
+
+
 ########################################################################################################################
 if __name__ == "__main__":
-
     print("Starting")
     terraform_file_name = "terraform_resources.conf"
     gcp_setup = get_gcp_environment(terraform_file_name)
@@ -273,7 +280,7 @@ if __name__ == "__main__":
         target_project = gcp_setup["gcp_project"]
         sa_acc_to_imp = gcp_setup["gcp_instance_avml_sa"]
         volatility_script = gcp_setup["volatility_script"]
-        cluster_id = gcp_setup["gke_cluster_name"]  
+        cluster_id = gcp_setup["gke_cluster_name"]
         pod_name_avml = gcp_setup["pod_name_avml"]  #'pod-node-affinity-mem-dump'
         pod_namespace_avml = gcp_setup["pod_namespace_avml"]
         pod_name_att = gcp_setup["pod_name_att"]  #'pod_node_affinity_attacker_pod'

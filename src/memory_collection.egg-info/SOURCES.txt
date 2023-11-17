@@ -1,0 +1,8 @@
+LICENSE.md
+README.md
+pyproject.toml
+src/memory_collection.py
+src/memory_collection.egg-info/PKG-INFO
+src/memory_collection.egg-info/SOURCES.txt
+src/memory_collection.egg-info/dependency_links.txt
+src/memory_collection.egg-info/top_level.txt

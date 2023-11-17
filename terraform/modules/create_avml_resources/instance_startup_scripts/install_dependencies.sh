@@ -5,14 +5,7 @@
 sudo apt-get update
 #wait 30
 sudo apt-get install -yq build-essential python3-pip rsync python3-dev libffi-dev gcc libc-dev cargo make musl-dev musl-tools musl curl git golang-1.14
-#apt-get update && \
-    #    apt-get install -y --no-install-recommends apt-utils && \
-    #    apt-get -y install sudo && \
-    #    apt-get -y install libssl-dev pkg-config && \
-    #    apt-get -y install python3-pip && \
-    #    apt-get -y install procps && \
-    #    apt-get update
-#wait 30
+
 # Install MUSL
 sudo apt-get install -yq musl-dev musl-tools musl
 
@@ -20,7 +13,6 @@ sudo apt-get install -yq musl-dev musl-tools musl
 cd $HOME
 
 # Install Rust via rustup
-#curl https://sh.rustup.rs -sSf | sh -s -- -y
 sudo curl https://sh.rustup.rs -sSf | \
     sh -s -- --default-toolchain stable -y 
 
@@ -50,7 +42,14 @@ cd $HOME
 # Install volatility3
 git clone https://github.com/volatilityfoundation/volatility3.git
 cd volatility3
+
+# Update volatility3 - Change "long unsigned int" to 'unsigned long' to support new kernel images compiled with newer version of clang+LLVM
+# Link to LLVM compiler commit that introduced this error: https://github.com/llvm/llvm-project/commit/f6a561c4d6754b13165a49990e8365d819f64c86.
+sed -i -e 's/long unsigned int/unsigned long/g' volatility3/framework/automagic/linux.py
+sed -i -e 's/long unsigned int/unsigned long/g' volatility3/framework/plugins/linux/kmsg.py
+
+# Build
 pip3 install -r requirements.txt
 python3 setup.py build
-#sudo python3 setup.py install
 cd $HOME
+

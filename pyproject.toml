@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=41.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
+
+[tool.coverage.paths]
+source = ["src", ".tox/*/site-packages"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.coverage.xml]
+output = "cobertura/coverage.xml"
+
+[tool.pylint.'FORMAT']
+max-line-length = 88
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+  "invalid-name",
+  "too-many-instance-attributes",
+  "too-few-public-methods",
+  "too-many-arguments",
+  "missing-function-docstring",
+  "missing-module-docstring",
+  "missing-class-docstring",
+  "logging-format-interpolation",
+  "logging-fstring-interpolation",
+  "fixme",
+  "unspecified-encoding"
+]
+
