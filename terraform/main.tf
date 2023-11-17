@@ -53,22 +53,16 @@ provider "kubernetes" {
 variable "pid" {
    type        = string
    description = "GCP project."
-   #default = "bsidesnyc2023"
-   default = "hedonari-ablegu-oused-mit"
 }
 
 variable "module_avml_resources_installation_path" {
    type        = string
    description = "Installation path for the scripts. E.g. /home/gcp_test_user"
-   #default = "/home/marshal"
-   default = "/home/mhallberg"
 }
 
 variable "module_avml_resources_installation_user" {
    type        = string
    description = "The user to where installation scripts are stored. E.g. gcp_test_user"
-   #default = "marshal"
-   default = "mhallberg"
 }
 
 variable "zone" {

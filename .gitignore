@@ -44,6 +44,8 @@ terraform_resources.conf
 
 # Ignore pytest
 *.pytest_cache
+
+# Ignore test reports
 /test-reports
 
 # Ignore memory_collection.egg-info
@@ -51,4 +53,4 @@ terraform_resources.conf
 
 # Ignore
 *.xml
-
+*.cfg
