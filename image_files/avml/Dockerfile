@@ -1,5 +1,8 @@
 #################################################################################################
 FROM nginx:latest
+# If you buld this image using a Macbook silicon - use the below config
+# FROM --platform=linux/amd64 nginx:latest
+LABEL maintainer="Marcus Hallberg <marcus.oj.hallberg@gmail.com>"
 RUN apt-get update && \
        apt-get install -y --no-install-recommends apt-utils && \
        apt-get -y install sudo && \
