@@ -126,7 +126,7 @@ history
 ## Start demo
 
 ### Install tox
-Instructions for how to install tox can be found here.
+Instructions for how to install tox can be found here: https://pypi.org/project/tox/
 
 ### Install pyenv and apply python version
 Install pyenv on your system using this repository and instructions: https://github.com/pyenv/pyenv
