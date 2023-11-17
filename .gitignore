@@ -54,3 +54,4 @@ terraform_resources.conf
 # Ignore
 *.xml
 *.cfg
+*.coverage
