@@ -27,7 +27,7 @@ variable "vpc" {
 variable "base_image" {
    type        = string
    description = "Base image for compute engines."
-   default = "debian-cloud/debian-10"
+   default = "debian-cloud/debian-12"
 }
 
 variable "disk_size" {

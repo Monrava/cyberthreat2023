@@ -4,7 +4,7 @@
 #!/bin/bash
 sudo apt-get update
 #wait 30
-sudo apt-get install -yq build-essential python3-pip rsync python3-dev libffi-dev gcc libc-dev cargo make musl-dev musl-tools musl curl git golang-1.14
+sudo apt-get install -yq build-essential python3-pip rsync python3-dev python3.11-venv libffi-dev gcc libc-dev cargo make musl-dev musl-tools musl curl git golang
 
 # Install MUSL
 sudo apt-get install -yq musl-dev musl-tools musl
@@ -36,19 +36,16 @@ cd $HOME
 git clone https://github.com/volatilityfoundation/dwarf2json.git
 cd dwarf2json
 # Install using the required go version
-/usr/lib/go-1.14/bin/go build 
+/usr/lib/go/bin/go build  
 cd $HOME
 
 # Install volatility3
 git clone https://github.com/volatilityfoundation/volatility3.git
 cd volatility3
 
-# Update volatility3 - Change "long unsigned int" to 'unsigned long' to support new kernel images compiled with newer version of clang+LLVM
-# Link to LLVM compiler commit that introduced this error: https://github.com/llvm/llvm-project/commit/f6a561c4d6754b13165a49990e8365d819f64c86.
-sed -i -e 's/long unsigned int/unsigned long/g' volatility3/framework/automagic/linux.py
-sed -i -e 's/long unsigned int/unsigned long/g' volatility3/framework/plugins/linux/kmsg.py
-
 # Build
+python3 -m venv venv
+source venv/bin/activate
 pip3 install -r requirements.txt
 python3 setup.py build
 cd $HOME
