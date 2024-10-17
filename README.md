@@ -108,6 +108,11 @@ terraform apply -lock=true -auto-approve
 terraform output  >> terraform_resources.conf
 ```
 
+When you're done with the testing you can destroy the environment by:
+```bash
+terraform destroy
+```
+
 ## Access resources
 ```bash
 gcloud container clusters get-credentials demo-gke-cluster --zone $zone --project $gcp_project
@@ -151,8 +156,7 @@ source .venv/bin/activate
 Execute the python script using the GKE node name. 
 E.g.
 ```bash
-(.venv) cd /src
-(.venv) python3 memory_collection.py --gke_node_name gke-demo-gke-clust-demo-gke-node--f72013e9-jm9c
+(.venv) python3 /src/memory_collection.py --gke_node_name gke-demo-gke-clust-demo-gke-node--f72013e9-jm9c
 ```
 
 ### Access forensic compute engine
